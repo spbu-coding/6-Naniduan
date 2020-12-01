@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 int asc(const char* str1, const char* str2){
     return strcmp(str1, str2);
 }
@@ -46,6 +47,8 @@ int read_strings(char* input_file_name, strings_array_t strings, array_size_t am
         }
     }
 
+    fclose(input_file);
+
     const char* enter = "\n";
 
     if (strings[amount_of_strings-1][strlen(strings[amount_of_strings-1])-1] != '\n'){
@@ -84,6 +87,9 @@ int write_strings(char* output_file_name, strings_array_t strings, array_size_t 
             return -1;
         }
     }
+
+    fclose(output_file);
+
     return 0;
 }
 
@@ -128,6 +134,8 @@ int main(int argc, char** argv) {
 
     err = write_strings(argv[3], strings, amount_of_strings);
     if (err != 0) return err;
+
+    free(strings);
 
     return 0;
 }
