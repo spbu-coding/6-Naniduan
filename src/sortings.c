@@ -7,8 +7,8 @@
 
 
 void bubble(strings_array_t strings, array_size_t amount_of_strings, comparator_func_t comparator){
-    for (long long i = 0; i<amount_of_strings; i++){
-        for (long long j = 1; j<amount_of_strings; j++){
+    for (array_size_t i = 0; i<amount_of_strings; i++){
+        for (array_size_t j = 1; j<amount_of_strings; j++){
             if (comparator(strings[j-1],strings[j]) > 0){
                 swap(strings[j-1],strings[j]);
             }
@@ -17,8 +17,8 @@ void bubble(strings_array_t strings, array_size_t amount_of_strings, comparator_
 }
 
 void insertion(strings_array_t strings, array_size_t amount_of_strings, comparator_func_t comparator){
-    for (long long i = 1; i<amount_of_strings; i++){
-        long long j = i;
+    for (array_size_t i = 1; i<amount_of_strings; i++){
+        array_size_t j = i;
         while (j>0 && comparator(strings[j-1], strings[j])>0){
             swap(strings[j-1], strings[j]);
             j--;
@@ -38,7 +38,7 @@ void merge(strings_array_t strings, array_size_t amount_of_strings, comparator_f
 
         strings_array_t buffer = (strings_array_t)malloc((MAX_INPUT_STRING_SIZE+1) * amount_of_strings);
 
-        long long i = 0, j = amount_of_strings/2, pointer = 0;
+        array_size_t i = 0, j = amount_of_strings/2, pointer = 0;
         while (i<amount_of_strings/2 && j<amount_of_strings){
             if (comparator(strings[i],strings[j])>0){
                 buffer[pointer] = strings[j];
@@ -63,7 +63,7 @@ void merge(strings_array_t strings, array_size_t amount_of_strings, comparator_f
             pointer++;
         }
 
-        for (long long iter = 0; iter<amount_of_strings; iter++){
+        for (array_size_t iter = 0; iter<amount_of_strings; iter++){
             strings[iter] = buffer[iter];
         }
 
