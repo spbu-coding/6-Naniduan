@@ -1,6 +1,6 @@
 #include "sortings.h"
 #include <stdlib.h>
-#include <stdio.h>
+#include <limits.h>
 #define CHAR_COUNT (UCHAR_MAX + 1)
 
 #define swap(str1, str2) char* buffer = str1;str1 = str2;str2 = buffer
