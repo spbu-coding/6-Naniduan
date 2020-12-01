@@ -88,6 +88,11 @@ int write_strings(char* output_file_name, strings_array_t strings, long long amo
 }
 
 int main(int argc, char** argv) {
+    if (argc != 6){
+        fprintf(stderr, "too little params\n");
+        return -1;
+    }
+
     strings_array_t possible_sorts = (strings_array_t)malloc(10 * 5);
     possible_sorts[0] = "bubble";
     possible_sorts[1] = "insertion";
