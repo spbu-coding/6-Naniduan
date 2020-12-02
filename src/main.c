@@ -34,7 +34,7 @@ int check_input(char** argv, strings_array_t possible_sorts, strings_array_t pos
 }
 
 int read_strings(char* input_file_name, strings_array_t strings, array_size_t amount_of_strings){
-    FILE* input_file = fopen(input_file_name, "r");
+    FILE* input_file = fopen(input_file_name, "rb");
     if (input_file == NULL) {
         fprintf(stderr, "Failed to open given input file\n");
         return -1;
@@ -75,7 +75,7 @@ void sort_strings(strings_array_t strings, array_size_t amount_of_strings, char*
 }
 
 int write_strings(char* output_file_name, strings_array_t strings, array_size_t amount_of_strings){
-    FILE* output_file = fopen(output_file_name, "w");
+    FILE* output_file = fopen(output_file_name, "wb");
     if (output_file == NULL) {
         fprintf(stderr, "Failed to open given output file\n");
         return -1;
@@ -114,6 +114,22 @@ int main(int argc, char** argv) {
     if (err != 0) return err;
     array_size_t amount_of_strings = atoll(argv[1]);
 
+    if (amount_of_strings == 0) {
+        FILE* output_file = fopen(argv[3], "wb");
+        if (output_file == NULL) {
+            fprintf(stderr, "Failed to open given output file\n");
+            return -1;
+        }
+
+        if(fputs("\n", output_file)==EOF){
+            fprintf(stderr, "Failed to fill given output file\n");
+            return -1;
+        }
+
+        fclose(output_file);
+    }
+    else{
+
     strings_array_t strings = (strings_array_t)malloc((MAX_INPUT_STRING_SIZE+1) * amount_of_strings);
     if(strings == NULL){
         fprintf(stderr, "Failed to find enough memory\n");
@@ -137,5 +153,5 @@ int main(int argc, char** argv) {
 
     free(strings);
 
-    return 0;
+    return 0;}
 }
