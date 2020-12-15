@@ -12,6 +12,20 @@ int des(const char* str1, const char* str2){
     return -strcmp(str1, str2);
 }
 
+int is_not_digit(char c){
+    if (c=='0') return 0;
+    if (c=='1') return 0;
+    if (c=='2') return 0;
+    if (c=='3') return 0;
+    if (c=='4') return 0;
+    if (c=='5') return 0;
+    if (c=='6') return 0;
+    if (c=='7') return 0;
+    if (c=='8') return 0;
+    if (c=='9') return 0;
+    return 1;
+}
+
 int check_input(char** argv, strings_array_t possible_sorts, strings_array_t possible_comps){
     int sortcheck = 1;
     for (int i=0; i<5; i++){ //5 is amount of strings in possible_sorts
@@ -30,6 +44,13 @@ int check_input(char** argv, strings_array_t possible_sorts, strings_array_t pos
     }
 
     if (sortcheck || compcheck) return -1;
+
+    for(size_t i = 0; i<strlen(argv[1]); i++){
+        if (is_not_digit(argv[1][i])){
+            fprintf(stderr, "the amount of strings %s is not a number\n", argv[1]);
+            return -1;
+        }
+    }
     return 0;
 }
 
@@ -112,6 +133,7 @@ int main(int argc, char** argv) {
 
     int err = check_input(argv, possible_sorts, possible_comps);
     if (err != 0) return err;
+
     array_size_t amount_of_strings = atoll(argv[1]);
 
     if (amount_of_strings == 0) {
@@ -132,7 +154,7 @@ int main(int argc, char** argv) {
 
     strings_array_t strings = (strings_array_t)malloc((MAX_INPUT_STRING_SIZE+1) * amount_of_strings);
     if(strings == NULL){
-        fprintf(stderr, "Failed to find enough memory\n");
+        fprintf(stderr, "Failed to find enough memory in main\n");
         return -1;
     }
 

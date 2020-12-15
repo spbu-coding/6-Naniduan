@@ -1,6 +1,7 @@
 #include "sortings.h"
 #include <stdlib.h>
 #include <limits.h>
+#include <stdio.h>
 #define CHAR_COUNT (UCHAR_MAX + 1)
 
 #define swap(str1, str2) char* buffer = str1;str1 = str2;str2 = buffer
@@ -37,6 +38,10 @@ void merge(strings_array_t strings, array_size_t amount_of_strings, comparator_f
         merge(&strings[amount_of_strings/2], amount_of_strings-amount_of_strings/2, comparator);
 
         strings_array_t buffer = (strings_array_t)malloc((MAX_INPUT_STRING_SIZE+1) * amount_of_strings);
+        if (buffer == NULL) {
+            fprintf(stderr, "failed to find memory for merge sort\n");
+            return;
+        }
 
         array_size_t i = 0, j = amount_of_strings/2, pointer = 0;
         while (i<amount_of_strings/2 && j<amount_of_strings){
@@ -71,7 +76,7 @@ void merge(strings_array_t strings, array_size_t amount_of_strings, comparator_f
     }
 }
 
-void quick_split(strings_array_t strs, unsigned int beg, const unsigned int end, comparator_func_t cmp) {
+static void quick_split(strings_array_t strs, unsigned int beg, const unsigned int end, comparator_func_t cmp) {
     while (beg < end) {
         if ((strs[beg] <= strs[(beg + end - 1) / 2] && strs[(beg + end - 1) / 2] <= strs[end - 1]) || (strs[end - 1] <= strs[(beg + end - 1) / 2] && strs[(beg + end - 1) / 2] <= strs[beg])) {
             swap(strs[beg], strs[(beg + end - 1) / 2]);
@@ -103,7 +108,7 @@ void quick(strings_array_t strings, array_size_t amount_of_strings, comparator_f
     quick_split(strings, 0, amount_of_strings, comparator);
 }
 
-void radix_core_part(strings_array_t lines, array_size_t count, comparator_func_t comp, array_size_t l, array_size_t r, array_size_t d) {
+static void radix_core_part(strings_array_t lines, array_size_t count, comparator_func_t comp, array_size_t l, array_size_t r, array_size_t d) {
     if (d >= MAX_INPUT_STRING_SIZE || l + 1 >= r) return;
 
     size_t cmp_proxy[CHAR_COUNT];
@@ -117,6 +122,10 @@ void radix_core_part(strings_array_t lines, array_size_t count, comparator_func_
     memcpy(cnt_copy, cnt, (CHAR_COUNT) * sizeof *cnt);
 
     strings_array_t c = malloc((r - l) * sizeof *c);
+    if (c == NULL) {
+        fprintf(stderr, "failed to find memory for radix sort\n");
+        return;
+    }
     for (array_size_t i = l; i < r; ++i) {
         c[--cnt[cmp_proxy[(unsigned char) lines[i][d]]]] = lines[i];
     }
