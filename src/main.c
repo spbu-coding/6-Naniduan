@@ -45,7 +45,7 @@ int check_input(char** argv, strings_array_t possible_sorts, strings_array_t pos
 
     if (sortcheck || compcheck) return -1;
 
-    for(int i = 0; i<strlen(argv[1]); i++){
+    for(size_t i = 0; i<strlen(argv[1]); i++){
         if (is_not_digit(argv[1][i])){
             fprintf(stderr, "the amount of strings %s is not a number\n", argv[1]);
             return -1;
@@ -135,7 +135,6 @@ int main(int argc, char** argv) {
     if (err != 0) return err;
 
     array_size_t amount_of_strings = atoll(argv[1]);
-    printf("%ll", amount_of_strings);
 
     if (amount_of_strings == 0) {
         FILE* output_file = fopen(argv[3], "wb");
